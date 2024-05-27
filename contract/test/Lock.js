@@ -2,8 +2,8 @@ const { ethers } = require("hardhat");
 const { expect } = require("chai");
 
 
-const DAI = "0x2bcAE8205a77dabB2479CF2c85ded7d963101B86";
-const WETH9 = "0xEF1DACBce5194C668BEe55f2ca599F366709db0C";
+const DAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
+const WETH9 = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
 const  USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 
 describe("SingleSwapToken", () => {
@@ -31,7 +31,17 @@ describe("SingleSwapToken", () => {
     await weth.approve(singleSwapToken.target, amountIn);
 
     await singleSwapToken.swapExactInputSingle(amountIn);
-    const daiBalance = await dai.balanceOf(accounts[0].address);
-    console.log("DAI Balance of account[0]:", daiBalance.toString());
+    const result  = await dai.balanceOf(accounts[0].address);
+    console.log(result.toString());
   });
+  it("swapExactOutputSingle" , async()=>{
+    const wethAmountInMax = 10n**18n;
+    const daiAmountOut = 100n*10n**18n;
+
+    await weth.deposit({value:wethAmountInMax});
+    await weth.approve(singleSwapToken.target,wethAmountInMax);
+
+    await singleSwapToken.swapExactOutputSingle(daiAmountOut,wethAmountInMax);
+    console.log(await dai.balanceOf(accounts[0].address));
+  })
 });

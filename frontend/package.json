@@ -14,11 +14,13 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@tanstack/react-query": "^5.37.1",
+    "ethers": "^6.12.1",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "viem": "^2.12.1",
-    "wagmi": "^2.9.6"
+    "wagmi": "^2.9.6",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
     "postcss": "^8",

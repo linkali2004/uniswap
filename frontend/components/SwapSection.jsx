@@ -2,12 +2,16 @@
 
 import { Box, Button, InputAdornment, TextField, Typography, useMediaQuery } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image';
 import ConnectWallet from './ConnectWallet';
-import { useAccount } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
 import SettingsSwap from './SettingsSwap';
-import CoinSwap from "./CoinSwap";
+import CoinSelect from './CoinSelect';
+import { CoinContext } from '@/context/CoinContext';
+
+
+
 
 export default function SwapSection() {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -21,11 +25,20 @@ export default function SwapSection() {
 
     const { address } = useAccount()
     const[change,setChange]=useState(false);
-  
+    
+    const {swapTokens} = useContext(CoinContext);
+  const[dai,setDai] = useState(0);
+    const [value,setValue] = useState();
+
+   async function handlingSwapping()
+   {
+    let result = await swapTokens(value,address)
+    setDai(result);
+   }
 
     return (
         <Box sx={{ width: "100%", maxHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" ,marginTop:"40px"}}>
-            <Box sx={{ background: "#0F0F0F", width: "100vh",  height: change?(isSmallScreen?"40vh":"55vh"):(isSmallScreen?"25vh":"35vh"), borderRadius: "14px" ,padding:"12px" ,  display: "flex", flexDirection:"column" , justifyContent: "center"}}>
+            <Box sx={{ background: "#0F0F0F", width: "100vh",  height: change?(isSmallScreen?"40vh":"55vh"):(isSmallScreen?"30vh":"45vh"), borderRadius: "14px" ,padding:"12px" ,  display: "flex", flexDirection:"column" , justifyContent: "center"}}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", padding: "12px" }}>
                     <Typography variant="body1">{change?"Make Changes":"Swap"}</Typography>
                     <SettingsIcon fontSize="small" onClick={()=>{
@@ -40,7 +53,8 @@ export default function SwapSection() {
            ):(
             <>
               <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"column",gap:"10px"}}>
-                    <TextField size="small"  type="number" id="filled-basic"  placeholder ="0" variant="outlined" sx={{
+              <Box sx={{display:"flex",gap:2 ,alignItems:"center"}}>
+                      <TextField onChange={(e)=>setValue(e.target.value)} size="small" type="number" id="filled-basic" placeholder ="0"  variant="outlined" sx={{
                         '& .MuiOutlinedInput-root': {
                             '& fieldset': {
                                 borderColor: '#FFED33',
@@ -62,10 +76,11 @@ export default function SwapSection() {
                         '& .MuiInputLabel-root.Mui-focused': {
                             color: '#BD9B00', // Label color when focused
                         },
-                    }} InputProps={{
-                        endAdornment: <InputAdornment position="end"><Button variant="contained" sx={{ background: "#FFED33", color: "#1B1212", textTransform: "capitalize", "&:hover": { background: "#FFED33", color: "#1B1212" } }} size="small" startIcon={<Image src="/ethereum-eth-logo.png" width={20} height={20} alt="eth" />}>ETH</Button></InputAdornment>,
                     }} />
-                    <TextField size="small" type="number" id="filled-basic" placeholder ="0"  variant="outlined" sx={{
+                    <CoinSelect whichOne = "first"></CoinSelect>
+                      </Box>
+                      <Box sx={{display:"flex",gap:2,alignItems:"center"}}>
+                      <TextField value={dai} onChange={(e)=>setDai(e.target.value)} size="small" type="number" id="filled-basic" placeholder ="0"  variant="outlined" sx={{
                         '& .MuiOutlinedInput-root': {
                             '& fieldset': {
                                 borderColor: '#FFED33',
@@ -87,13 +102,13 @@ export default function SwapSection() {
                         '& .MuiInputLabel-root.Mui-focused': {
                             color: '#BD9B00', // Label color when focused
                         },
-                    }} InputProps={{
-                        endAdornment: <InputAdornment position="end"><Button variant="contained" sx={{ background: "#FFED33", color: "#1B1212", textTransform: "capitalize", "&:hover": { background: "#FFED33", color: "#1B1212" } }} size="small" startIcon={<Image src="/ethereum-eth-logo.png" width={20} height={20} alt="eth" />}>ETH</Button></InputAdornment>,
                     }} />
+                    <CoinSelect whichOne ="second"></CoinSelect>
+                      </Box>
                     </Box>
                    <Box sx={{display:"flex",justifyContent:"center" , marginTop:"10px"}}>
                  {address?(
-                      <Button variant="contained" sx={{ background: "#FFED33", color: "#1B1212", textTransform: "capitalize", "&:hover": { background: "#FFED33", color: "#1B1212" } , borderRadius:"14px" }}>Swap</Button>
+                      <Button onClick={handlingSwapping} variant="contained" sx={{ background: "#FFED33", color: "#1B1212", textTransform: "capitalize", "&:hover": { background: "#FFED33", color: "#1B1212" } , borderRadius:"14px" }}>Swap</Button>
                  ):(
                     <Button onClick={handleOpenConnect} variant="contained" sx={{ background: "#FFED33", color: "#1B1212", textTransform: "capitalize", "&:hover": { background: "#FFED33", color: "#1B1212" } , borderRadius:"14px" }}>Connect Wallet</Button>
                  )}

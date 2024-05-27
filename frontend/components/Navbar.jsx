@@ -18,11 +18,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 import TokenList from './TokenList';
 import { Close } from '@mui/icons-material';
+import { getNetworkName } from '@/utils/appFeature';
 
 export default function Navbar() {
     const [value, setValue] = React.useState(0);
     const { address } = useAccount()
     const { disconnect } = useDisconnect()
+    const [networkName , setNetworkName] = React.useState();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -47,7 +49,17 @@ export default function Navbar() {
     };
 
 
-    console.log(isSmallScreen)
+     React.useEffect(()=>{
+      async function getName()
+      {
+        let a = await getNetworkName();
+        setNetworkName(a?.name);
+      }
+      if(address != "" || address != null)
+      {
+        getName();
+      }
+     },[address]);
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ background: "transparent" }} elevation={0}>
@@ -73,10 +85,10 @@ export default function Navbar() {
                         </Tabs>
                     </Box>
                     <Stack direction="row" spacing={2}>
-                        <Button variant="contained" sx={{ background: "#1B1212", color: "#FFED33", textTransform: "capitalize" }}>Network Name</Button>
+                        <Button variant="contained" sx={{ background: "#1B1212", color: "#FFED33", textTransform: "capitalize" }}>{networkName?networkName:"Network Name"}</Button>
                         {address?(
                         <>
-                          <Button variant="contained" sx={{ background: "#1B1212", color: "#FFED33", textTransform: "capitalize" }} >Disconnect</Button>
+                          <Button variant="contained" sx={{ background: "#1B1212", color: "#FFED33", textTransform: "capitalize" }} onClick={()=>disconnect()}>Disconnect</Button>
                           <Button variant="contained" sx={{ background: "#1B1212", color: "#FFED33", textTransform: "capitalize" }}  onClick={handleClick}>{address.substr(0,12) + "..."}</Button>
                         </>  
                         ):(

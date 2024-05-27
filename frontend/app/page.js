@@ -7,6 +7,7 @@ import { WagmiProvider } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {config} from "../components/config.js";
 import { useMediaQuery } from "@mui/material";
+import CoinContextProvider from "@/context/CoinContext.jsx";
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,8 @@ const queryClient = new QueryClient();
 export  default function Home() {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
   return (
-    <WagmiProvider config={config}>
+    <CoinContextProvider>
+          <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
     <div style={{paddingTop:isSmallScreen?"25px":"70px"}}>
          <Head>
@@ -27,5 +29,6 @@ export  default function Home() {
     </div>
     </QueryClientProvider>
     </WagmiProvider>
+    </CoinContextProvider>
   );
 }

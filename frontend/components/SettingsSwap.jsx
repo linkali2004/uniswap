@@ -1,11 +1,8 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
 import React from 'react'
-import CoinSwap from "./CoinSwap";
 
 export default function SettingsSwap() {
     const[changeCoin,setChangeCoin] = React.useState(false);
@@ -112,9 +109,6 @@ export default function SettingsSwap() {
         control={<Android12Switch defaultChecked />}
         label="Transaction Deadline"
       />
-        </Box>
-        <Box sx={{display:"flex",justifyContent:"center"}}>
-        <Button variant="outlined" sx={{ borderColor: "#FFED33", color: "#FFED33", textTransform: "capitalize", "&:hover": { background: "#FFED33", color: "#1B1212" } , marginBottom:"14px" }} size="small" onClick={()=>{setChangeCoin(true);}}>Coin Change</Button>
         </Box>
             </>
         )}
