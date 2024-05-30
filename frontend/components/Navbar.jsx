@@ -19,6 +19,7 @@ import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 import TokenList from './TokenList';
 import { Close } from '@mui/icons-material';
 import { getNetworkName } from '@/utils/appFeature';
+import { Link,useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
     const [value, setValue] = React.useState(0);
@@ -60,6 +61,7 @@ export default function Navbar() {
         getName();
       }
      },[address]);
+     const navigate = useNavigate();
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ background: "transparent" }} elevation={0}>
@@ -79,9 +81,9 @@ export default function Navbar() {
                         <>
                         <Box sx={{ flexGrow: 1 }}>
                         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab label="Swap" sx={{ color: "#937801", textTransform: "capitalize",fontSize: "16px", fontWeight: "bold" }} />
-                            <Tab label="Tokens" sx={{ color: "#937801", textTransform: "capitalize" }} />
-                            <Tab label="Pools" sx={{ color: "#937801", textTransform: "capitalize" }} />
+                        <Tab label="Swap" sx={{ color: "#937801", textTransform: "capitalize",fontSize: "16px", fontWeight: "bold" }}  onClick={()=>navigate("/swap")}/>
+                            <Tab label="Tokens" sx={{ color: "#937801", textTransform: "capitalize" }}  onClick={()=>navigate("/token")} />
+                            <Tab label="Pools" sx={{ color: "#937801", textTransform: "capitalize" }}  onClick={()=>navigate("/pool")} />
                         </Tabs>
                     </Box>
                     <Stack direction="row" spacing={2}>
