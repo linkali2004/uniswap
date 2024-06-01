@@ -5,12 +5,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { CoinContext } from '@/context/CoinContext';
 
+
+
 export default function CoinSelect({whichOne}) {
   const {btnProp,setBtnProp} = React.useContext(CoinContext);
+  const {allTokens} = React.useContext(CoinContext);
 
-  const Coins = ["WETH", "USDC", "DAI", "BOO", "LIFE"];
-
-  const[value ,setValue] = React.useState(Coins[0]);
+  const[value ,setValue] = React.useState(btnProp[whichOne]);
   const handleChange = (event) => {
     setValue(event.target.value);
     setBtnProp((btnProp) => ({
@@ -20,11 +21,12 @@ export default function CoinSelect({whichOne}) {
       
   };
 
+
   return (
     <FormControl sx={{ m: 1, minWidth: 120 ,padding:"10px 0px"}} size="small">
       <Select
         value={value}
-        defaultValue={Coins[0]}
+
         onChange={handleChange}
 
         sx={{
@@ -51,7 +53,7 @@ export default function CoinSelect({whichOne}) {
             },
           }}
       >
-      {Coins.map((data,index)=>{
+      {allTokens.map((data,index)=>{
         return (
             <MenuItem value={data} key = {data+index} sx={{ backgroundColor: '#1B1212', color: '#FFFFFF' }}>{data}</MenuItem>
         )

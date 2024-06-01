@@ -32,8 +32,10 @@ export default function SwapSection() {
 
    async function handlingSwapping()
    {
-    let result = await swapTokens(value,address)
-    setDai(result);
+    const poolAddress = "0xc2e9f25be6257c210d7adf0d4cd6e3e881ba25f8";
+    let result = await swapTokens(value,poolAddress)
+    // setDai(result);
+    console.log(result);
    }
 
     return (
@@ -77,7 +79,7 @@ export default function SwapSection() {
                             color: '#BD9B00', // Label color when focused
                         },
                     }} />
-                    <CoinSelect whichOne = "first"></CoinSelect>
+                    <CoinSelect whichOne = "firstOne"></CoinSelect>
                       </Box>
                       <Box sx={{display:"flex",gap:2,alignItems:"center"}}>
                       <TextField value={dai} onChange={(e)=>setDai(e.target.value)} size="small" type="number" id="filled-basic" placeholder ="0"  variant="outlined" sx={{
@@ -103,7 +105,7 @@ export default function SwapSection() {
                             color: '#BD9B00', // Label color when focused
                         },
                     }} />
-                    <CoinSelect whichOne ="second"></CoinSelect>
+                    <CoinSelect whichOne ="secondOne"></CoinSelect>
                       </Box>
                     </Box>
                    <Box sx={{display:"flex",justifyContent:"center" , marginTop:"10px"}}>

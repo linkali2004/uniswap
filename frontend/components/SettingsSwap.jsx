@@ -48,7 +48,7 @@ export default function SettingsSwap() {
             <Typography variant="body2">Slippage Tolerance</Typography>
             <Box sx={{display:"flex",gap:1}}>
                 <Button variant="contained" sx={{ background: "#1B1212", color: "#FFED33", textTransform: "capitalize" }}>Auto</Button>
-                <TextField size="small" id="filled-basic"  placeholder ="0.10%" variant="outlined" fullwidth sx={{
+                <TextField size="small" id="filled-basic"  placeholder ="0.10%" variant="outlined" fullWidth sx={{
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: '#FFED33',
@@ -77,7 +77,7 @@ export default function SettingsSwap() {
             <Typography variant="body2">Slippage Tolerance</Typography>
             <Box sx={{display:"flex",gap:1}}>
                 
-                <TextField size="small" id="filled-basic"  placeholder ="30" variant="outlined" fullwidth sx={{
+                <TextField size="small" id="filled-basic"  placeholder ="30" variant="outlined" fullWidth sx={{
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: '#FFED33',

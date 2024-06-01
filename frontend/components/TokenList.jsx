@@ -11,12 +11,20 @@ import { useAccount } from 'wagmi';
 
 export default function TokenList({ openMenu, handleCloseClick, anchorEl }) {
     const { address } = useAccount()
-    const [tokens,setTokens] = React.useState();
+    const [tokensBalance,setTokensBalance] = React.useState([]);
+    const [tokensSymbol,setTokensSymbol] = React.useState([]);
+    const [tokensName,setTokensName] = React.useState([]);
+
     React.useEffect(() => {
         async function gettingTokenBalance()
         {
             const requird = await gettingAllToken(address);
-            setTokens(requird);
+            if( requird.length)
+                {
+                    setTokensBalance(requird[0]);
+                    setTokensSymbol(requird[1]);
+                    setTokensName(requird[2]);
+                }
         }
         if(address != "" || address != null)
             {
@@ -26,7 +34,6 @@ export default function TokenList({ openMenu, handleCloseClick, anchorEl }) {
 
 
     
-   const arr = ["BOO" , "Life" , "WETH"];
 
 
     return (
@@ -57,15 +64,15 @@ export default function TokenList({ openMenu, handleCloseClick, anchorEl }) {
             </Box>
 
             <MenuList >
-                {tokens?.map((data,index) => {
+                {tokensBalance?.map((data,index) => {
                     return (
                             <MenuItem key = {data + index} sx={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
                                 <ListItemIcon>
-                                    <Avatar sx={{ background: "#937801", fontSize: "12px" }} variant="square">
-                                       { arr.at(index)}
+                                    <Avatar sx={{ background: "#937801", fontSize: "8px"}} variant="square">
+                                       {tokensSymbol[index]}
                                     </Avatar>
                                 </ListItemIcon>
-                                <ListItemText sx={{ color: "#937801" }}>{arr.at(index).toUpperCase()} Coin</ListItemText>
+                                <ListItemText sx={{ color: "#937801" }}>{tokensName[index]}</ListItemText>
                                 <Typography variant="body2" color="text.secondary" sx={{ color: "#937801" }}>
                                     {data}
                                 </Typography>
